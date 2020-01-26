@@ -16,4 +16,11 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    /** 
+     * Joystick axes:
+     * 0 - X axis
+     * 1 - Y axis
+     * 2 - Z axis (rotation)
+     */ 
+
 }

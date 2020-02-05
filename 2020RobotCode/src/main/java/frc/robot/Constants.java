@@ -21,6 +21,18 @@ public final class Constants {
      * 0 - X axis
      * 1 - Y axis
      * 2 - Z axis (rotation)
-     */ 
-
+     */
+	public static final int FRONT_LEFT_MOTOR_CONTROLLER = 1;
+	public static final int REAR_LEFT_MOTOR_CONTROLLER = 2;
+	public static final int FRONT_RIGHT_MOTOR_CONTROLLER = 3;
+    public static final int REAR_RIGHT_MOTOR_CONTROLLER = 4;
+    
+    public static final int DRIVER_JOYSTICK_USB_PORT = 0; 
+    public static final int JOYSTICK_X_AXIS = 0;
+    public static final int JOYSTICK_Y_AXIS = 1;
+    public static final int JOYSTICK_Z_AXIS = 2;
+    public static final int JOYSTICK_SCALE_AXIS = 3;
+    
+    public static final double Z_SCALE = 0.5;
+	
 }

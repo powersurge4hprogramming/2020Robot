@@ -10,29 +10,42 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class DriveTrainSubsys extends SubsystemBase {
 
+  MecanumDrive mecanumDrive;
   // Store the mecanum drive as a field of this subsystem
-
+  PWMVictorSPX frontLeft = new PWMVictorSPX(Constants.FRONT_LEFT_MOTOR_CONTROLLER);
+  PWMVictorSPX rearLeft = new PWMVictorSPX(Constants.REAR_LEFT_MOTOR_CONTROLLER);
+  PWMVictorSPX frontRight = new PWMVictorSPX(Constants.FRONT_RIGHT_MOTOR_CONTROLLER);
+  PWMVictorSPX rearRight = new PWMVictorSPX(Constants.REAR_RIGHT_MOTOR_CONTROLLER);
   /**
    * Creates a new DriveTrainSubsys.
    * Pass the speed controllers into the subsystem constructor, to create the mecanum drive with.
    */
+
   public DriveTrainSubsys() {
       // Initialize the mecanum drive w/the parameters
       // MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+      mecanumDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
   }
+
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     
+    
   }
-
+  public void setDrive( double x, double y, double z){
+    mecanumDrive.driveCartesian(x, y, z);
+    
+  }
   // Add methods to set drive state
 }

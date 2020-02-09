@@ -9,6 +9,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -17,30 +23,64 @@ public class Vision extends SubsystemBase {
   /**
    * Creates a new Vision.
    */
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  //Defines values
-  NetworkTableEntry tx = table.getEntry("tx");
-  NetworkTableEntry ty = table.getEntry("ty");
-  NetworkTableEntry ta = table.getEntry("ta");
 
-  
+   //Creates used limelight table object
+   private NetworkTable limeTable;
+  //Defines values
+  NetworkTableEntry tx; 
+  NetworkTableEntry ty;
+  NetworkTableEntry ta;
+
   
 
   //post to smart dashboard periodically
   
-  public Vision() {
-
+  public Vision(NetworkTable m_limeTable) {
+    limeTable = m_limeTable;
+    tx = limeTable.getEntry("tx");
+    ty = limeTable.getEntry("ty");
+    ta = limeTable.getEntry("ta");
   }
+
+  
 
   @Override
   public void periodic() {
     //This method will be called once per scheduler run
     //Read of limelight values periodically and posts to dashboard
+    
+    SmartDashboard.putNumber("LimelightX", getXOffsetAngle());
+    SmartDashboard.putNumber("LimelightY", getYOffsetAngle());
+    SmartDashboard.putNumber("LimelightArea", getPercentArea());
+  }
+
+  public double getXOffsetAngle(){
     double x = tx.getDouble(0.0);
+    return x;
+  }
+  public double getYOffsetAngle(){
     double y = ty.getDouble(0.0);
+    return y;
+  }
+  public double getPercentArea(){
     double area = ta.getDouble(0.0);
-    SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightArea", area);
+    return area;
+  }
+  /*
+  Acceptable inputs: 0,1,2 
+  0 = Standard - Side-by-side streams if a webcam is attached to Limelight
+  1 = PiP Main - The secondary camera stream is placed in the lower-right corner of the primary camera stream
+  2 = PiP Secondary - The primary camera stream is placed in the lower-right corner of the secondary camera stream
+  */
+  public void setCameraStream(int mode){
+    if(mode == 0){
+      limeTable.getEntry("stream").setNumber(0);
+    } else if(mode == 1){
+      limeTable.getEntry("stream").setNumber(1);
+    } else if(mode == 2){
+      limeTable.getEntry("stream").setNumber(2);
+    } else {
+      //Do nothing
+    }
   }
 }

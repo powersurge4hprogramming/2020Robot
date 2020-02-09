@@ -13,9 +13,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.MechDrive;
+import frc.robot.commands.SetXAlign;
 import frc.robot.subsystems.DriveTrainSubsys;
 import frc.robot.subsystems.Vision;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -24,10 +30,13 @@ import frc.robot.subsystems.Vision;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  
   private final DriveTrainSubsys m_driveTrain = new DriveTrainSubsys();
   private final Joystick m_driverInput = new Joystick(Constants.DRIVER_JOYSTICK_USB_PORT);
   private final MechDrive m_mechDrive = new MechDrive(m_driveTrain, this);
-  private final Vision vision = new Vision();
+  private final NetworkTable m_limeTable = NetworkTableInstance.getDefault().getTable("limelight");
+  private final Vision vision = new Vision(m_limeTable);
+
 
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_driveTrain);
@@ -41,6 +50,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_driveTrain.setDefaultCommand(m_mechDrive);
+    //vision.setCameraStream(1);
   }
 
   /**
@@ -51,6 +61,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //button.whenPressed();
+    new JoystickButton(m_driverInput, 1).whileHeld(new SetXAlign(m_driveTrain, vision));
     
   }
   public double getRawAxis(int axis){

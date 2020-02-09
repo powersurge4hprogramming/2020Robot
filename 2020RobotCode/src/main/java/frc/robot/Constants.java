@@ -34,5 +34,7 @@ public final class Constants {
     public static final int JOYSTICK_SCALE_AXIS = 3;
     
     public static final double Z_SCALE = 0.5;
+	public static final double TOLERANCE_X_ALIGN = 1;
+	public static final double ALIGN_LERP_T = 0.1;
 	
 }

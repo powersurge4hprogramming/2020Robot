@@ -36,5 +36,8 @@ public final class Constants {
     public static final double Z_SCALE = 0.5;
 	public static final double TOLERANCE_X_ALIGN = 1;
 	public static final double ALIGN_LERP_T = 0.1;
+	public static final double X_ALIGN_KP = 1;
+	public static final double X_ALIGN_KI = 1;
+	public static final double X_ALIGN_KD = 2;
 	
 }

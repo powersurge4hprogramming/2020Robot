@@ -18,10 +18,6 @@ import frc.robot.commands.MechDrive;
 import frc.robot.commands.SetXAlign;
 import frc.robot.subsystems.DriveTrainSubsys;
 import frc.robot.subsystems.Vision;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -60,8 +56,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //button.whenPressed();
-    new JoystickButton(m_driverInput, 1).whileHeld(new SetXAlign(m_driveTrain, vision));
+    new JoystickButton(m_driverInput, 1).whileHeld(new SetXAlign(m_driveTrain, vision, this));
     
   }
   public double getRawAxis(int axis){

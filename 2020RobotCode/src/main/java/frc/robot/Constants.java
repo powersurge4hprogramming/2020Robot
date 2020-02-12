@@ -39,5 +39,6 @@ public final class Constants {
 	public static final double X_ALIGN_KP = 1;
 	public static final double X_ALIGN_KI = 1;
 	public static final double X_ALIGN_KD = 2;
+	public static final double RED_VAL_FOR_BLUE = 0;
 	
 }

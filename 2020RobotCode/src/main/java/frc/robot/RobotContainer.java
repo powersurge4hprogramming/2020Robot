@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.MechDrive;
+import frc.robot.commands.PositionControl;
 import frc.robot.commands.RotationControl;
 import frc.robot.commands.SetXAlign;
 import frc.robot.subsystems.ColorSensor;
@@ -65,7 +66,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(m_driverInput, 1).whileHeld(new SetXAlign(m_driveTrain, vision, this));
-    new JoystickButton(m_driverInput, 8).whenPressed(new RotationControl(m_colorSensor, wheelOfFortune));
+    new JoystickButton(m_driverInput, Constants.BUTTON_INDEX_ROTATION_CONTROL).whenPressed(new RotationControl(m_colorSensor, wheelOfFortune));
+    new JoystickButton(m_driverInput, Constants.BUTTON_INDEX_POSITION_CONTROL).whenPressed(new PositionControl(m_colorSensor, wheelOfFortune));
     
   }
   public double getRawAxis(int axis){

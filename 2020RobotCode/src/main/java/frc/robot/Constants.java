@@ -47,6 +47,8 @@ public final class Constants {
 	public static final double X_ALIGN_KD = 2;
     public static final double RED_VAL_FOR_BLUE = 0;
 	public static final int NUM_OF_COLOR_THRESHOLD = 10;
+	public static final int BUTTON_INDEX_ROTATION_CONTROL = 8;
+	public static final int BUTTON_INDEX_POSITION_CONTROL = 7;
     
     
 	

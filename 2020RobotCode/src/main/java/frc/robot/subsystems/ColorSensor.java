@@ -59,21 +59,7 @@ public class ColorSensor extends SubsystemBase {
     int proximity = colorSensor.getProximity();
     match = colorMatcher.matchClosestColor(detectedColor);
     String colorString = getColorString(match);
-    
-    /*if(didChange()){
-      numOfChange++;
-    }
-
-    
-    /*if(didChange()){
-      colorCount = 0;
-    } else {
-      colorCount++;
-    }
-    if(colorCount == Constants.NUM_OF_COLOR_THRESHOLD){
-      numOfChange++;
-    }
-    */
+  
     if(ringBuffer.getColor().equals(match.color)){
       colorCount++;
     } else {
@@ -110,20 +96,6 @@ public class ColorSensor extends SubsystemBase {
     }
     return colorString;
   }
-  public boolean didChange() {
-    boolean value;
-    String colorString = getColorString(match);
-    if(!colorString.equals(previousColor)){
-      value = true;
-      //System.out.println(colorString);
-    } else {
-      value = false;
-    }
-
-    
-    //if((previousColor.equals("Blue") && colorString.equals("Yellow")) || )
-    return value;
-  }
 
   public void setNumRotateZero(){
     numOfChange = 0;
@@ -147,6 +119,22 @@ public class ColorSensor extends SubsystemBase {
     previousColor = getColorString(ringBuffer.getColor());
   }
 
+  /**
+   * color: char from FMS - describes the TARGET color.
+   */
+  public int getDirection(char color){
+    int kDirection;
+    Color detectedColor = colorSensor.getColor();
+    String currentColor = getColorString(colorMatcher.matchClosestColor(detectedColor));
+    if(currentColor.charAt(0) == (color)){
+      kDirection = 0;
+    } else {
+      kDirection = 1;
+    }
+    return kDirection ;
+  }
+
+
   public void printAll(Color detectedColor, double IR, int proximity, String colorString){
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
@@ -155,7 +143,6 @@ public class ColorSensor extends SubsystemBase {
     SmartDashboard.putNumber("Proximity", proximity);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
-    SmartDashboard.putBoolean("Did Change", didChange());
     SmartDashboard.putNumber("Number Of Changes", numOfChange);
     SmartDashboard.putNumber("Number Of Rotations", numOfRotations);
     SmartDashboard.putNumber("Color Count", colorCount);

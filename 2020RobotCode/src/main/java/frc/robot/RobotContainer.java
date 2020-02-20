@@ -65,7 +65,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(m_driverInput, 1).whileHeld(new SetXAlign(m_driveTrain, vision, this));
-    new JoystickButton(m_driverInput, 2).whileHeld(new RotationControl(m_colorSensor, wheelOfFortune));
+    new JoystickButton(m_driverInput, 8).whenPressed(new RotationControl(m_colorSensor, wheelOfFortune));
     
   }
   public double getRawAxis(int axis){

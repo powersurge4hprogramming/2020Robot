@@ -7,13 +7,19 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorMatch;
+
+import edu.wpi.first.wpilibj.util.Color;
+
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants. This class should not be used for any other
+ * purpose. All constants should be declared globally (i.e. public static). Do
+ * not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
     /** 
@@ -22,10 +28,12 @@ public final class Constants {
      * 1 - Y axis
      * 2 - Z axis (rotation)
      */
-	public static final int FRONT_LEFT_MOTOR_CONTROLLER = 1;
-	public static final int REAR_LEFT_MOTOR_CONTROLLER = 2;
+	public static final int FRONT_LEFT_MOTOR_CONTROLLER = 4;
+	public static final int REAR_LEFT_MOTOR_CONTROLLER = 5;
 	public static final int FRONT_RIGHT_MOTOR_CONTROLLER = 3;
-    public static final int REAR_RIGHT_MOTOR_CONTROLLER = 4;
+    public static final int REAR_RIGHT_MOTOR_CONTROLLER = 6;
+
+    public static final int SHOOTER_TALON_FX = 0;
     
     public static final int DRIVER_JOYSTICK_USB_PORT = 0; 
     public static final int JOYSTICK_X_AXIS = 0;
@@ -39,5 +47,11 @@ public final class Constants {
 	public static final double X_ALIGN_KP = 1;
 	public static final double X_ALIGN_KI = 1;
 	public static final double X_ALIGN_KD = 2;
+    public static final double RED_VAL_FOR_BLUE = 0;
+	public static final int NUM_OF_COLOR_THRESHOLD = 10;
+	public static final int BUTTON_INDEX_ROTATION_CONTROL = 8;
+	public static final int BUTTON_INDEX_POSITION_CONTROL = 7;
+    
+    
 	
 }

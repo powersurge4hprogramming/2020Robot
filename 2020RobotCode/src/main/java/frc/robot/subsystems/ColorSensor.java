@@ -126,6 +126,17 @@ public class ColorSensor extends SubsystemBase {
     int kDirection;
     Color detectedColor = colorSensor.getColor();
     String currentColor = getColorString(colorMatcher.matchClosestColor(detectedColor));
+    //Translates desired color into color need to align with field color sensor
+    if(color == 'B'){
+      color = 'R';
+    } else if(color == 'G'){
+      color = 'Y';
+    } else if(color == 'Y'){
+      color = 'G';
+    } else if(color == 'R'){
+      color = 'B';
+    }
+    //If its not at the color than keep driving, if it is then stop
     if(currentColor.charAt(0) == (color)){
       kDirection = 0;
     } else {

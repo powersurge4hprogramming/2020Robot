@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorSensor;
@@ -41,6 +42,7 @@ if(gameData.length() > 0)
 {
   kDirection = colorSens.getDirection(gameData.charAt(0));
     wheelOfFort.setDrive(0.2*kDirection);
+    SmartDashboard.putNumber("kDirection", kDirection);
   
 } else {
   //Code for no data received yet
@@ -51,6 +53,7 @@ if(gameData.length() > 0)
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    wheelOfFort.setDrive(0d);
   }
 
   // Returns true when the command should end.

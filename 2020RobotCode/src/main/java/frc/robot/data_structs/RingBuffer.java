@@ -14,15 +14,18 @@ import edu.wpi.first.wpilibj.util.Color;
  */
 public class RingBuffer {
 
-    Color[] arr;
-    int index;
+    private Color[] arr;
+    private int index;
+
+
     public RingBuffer(Color[] m_arr){
         arr = m_arr;
         index = 0;
     }
 
+    
     public Color getIndex(int index){
-        return arr[index];
+        return arr[index % arr.length];
     }
 
     public Color getNext(){
@@ -48,6 +51,6 @@ public class RingBuffer {
     }
 
     public void setIndex(int index){
-        this.index = index;
+        this.index = index % arr.length;
     }
 }

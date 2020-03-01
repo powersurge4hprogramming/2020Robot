@@ -28,10 +28,12 @@ public final class Constants {
      * 1 - Y axis
      * 2 - Z axis (rotation)
      */
-	public static final int FRONT_LEFT_MOTOR_CONTROLLER = 1;
-	public static final int REAR_LEFT_MOTOR_CONTROLLER = 2;
+	public static final int FRONT_LEFT_MOTOR_CONTROLLER = 4;
+	public static final int REAR_LEFT_MOTOR_CONTROLLER = 5;
 	public static final int FRONT_RIGHT_MOTOR_CONTROLLER = 3;
-    public static final int REAR_RIGHT_MOTOR_CONTROLLER = 4;
+    public static final int REAR_RIGHT_MOTOR_CONTROLLER = 6;
+
+    public static final int SHOOTER_TALON_FX = 0;
     
     public static final int DRIVER_JOYSTICK_USB_PORT = 0; 
     public static final int JOYSTICK_X_AXIS = 0;

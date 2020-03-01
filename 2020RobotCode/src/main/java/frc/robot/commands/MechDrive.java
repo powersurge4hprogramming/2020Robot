@@ -41,8 +41,6 @@ public class MechDrive extends CommandBase {
     double y = robotContainer.getRawAxis(Constants.JOYSTICK_Y_AXIS);
     double z = robotContainer.getRawAxis(Constants.JOYSTICK_Z_AXIS);
     double scale = robotContainer.getRawAxis(Constants.JOYSTICK_SCALE_AXIS);
-    //y is flipped in driverstation, this fixes that
-    y = y*-1;
     //Formula for scale (1-x)/2
     scale = (1-scale)/2;
     //squares inputs

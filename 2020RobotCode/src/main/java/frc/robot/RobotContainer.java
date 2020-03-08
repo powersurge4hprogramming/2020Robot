@@ -16,13 +16,21 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AimTurret;
+import frc.robot.commands.Collect;
 import frc.robot.commands.MechDrive;
 import frc.robot.commands.PositionControl;
 import frc.robot.commands.RotationControl;
 import frc.robot.commands.SetXAlign;
+import frc.robot.commands.Test;
+import frc.robot.subsystems.AimTurretSubsys;
+import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrainSubsys;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.StickyWheel;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.WheelOfFortune;
 /**
@@ -36,11 +44,19 @@ public class RobotContainer {
   
   private final DriveTrainSubsys m_driveTrain = new DriveTrainSubsys();
   private final Joystick m_driverInput = new Joystick(Constants.DRIVER_JOYSTICK_USB_PORT);
-  private final MechDrive m_mechDrive = new MechDrive(m_driveTrain, this);
+  private final Joystick m_operatorInput = new Joystick(Constants.OPERATOR_JOYSTICK_USB_PORT);
   private final NetworkTable m_limeTable = NetworkTableInstance.getDefault().getTable("limelight");
   private final Vision vision = new Vision(m_limeTable);
   private final ColorSensor m_colorSensor = new ColorSensor();
   private final WheelOfFortune wheelOfFortune = new WheelOfFortune();
+  private final Shooter m_shooter = new Shooter(vision);
+  private final StickyWheel m_stickyWheel = new StickyWheel();
+  private final Collector m_collector = new Collector();
+  private final AimTurretSubsys m_turret = new AimTurretSubsys();
+
+  
+  private final MechDrive m_mechDrive = new MechDrive(m_driveTrain, this);
+  private final AimTurret m_aimCommand = new AimTurret(m_turret, this);
 
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_driveTrain);
@@ -54,7 +70,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_driveTrain.setDefaultCommand(m_mechDrive);
-    
+    m_turret.setDefaultCommand(m_aimCommand);
     //vision.setCameraStream(1);
   }
 
@@ -65,13 +81,19 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverInput, 1).whileHeld(new SetXAlign(m_driveTrain, vision, this));
+    new JoystickButton(m_operatorInput, Constants.SET_X_ALIGN_BUTTON).whileHeld(new SetXAlign(m_turret, vision, this));
     new JoystickButton(m_driverInput, Constants.BUTTON_INDEX_ROTATION_CONTROL).whenPressed(new RotationControl(m_colorSensor, wheelOfFortune));
     new JoystickButton(m_driverInput, Constants.BUTTON_INDEX_POSITION_CONTROL).whenPressed(new PositionControl(m_colorSensor, wheelOfFortune));
-    
+    //new JoystickButton(m_driverInput, 3).whileHeld(new Test(m_shooter));
+    //new JoystickButton(m_driverInput, Constants.JOYSTICK_FEEDER_BUTTON).whileHeld(new FeederTestCmd(m_feeder));
+    new JoystickButton(m_operatorInput, Constants.OPERATOR_COLLECT_BUTTON).whileHeld(new Collect(m_collector));
   }
-  public double getRawAxis(int axis){
+  public double getRawAxisDriver(int axis){
     return m_driverInput.getRawAxis(axis);
+  }
+
+  public double getRawAxisOperator(int axis){
+    return m_operatorInput.getRawAxis(axis);
   }
 
   public ColorSensor getColorSensor(){

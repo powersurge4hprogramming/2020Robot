@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.data_structs.RollingAverage;
+import frc.robot.subsystems.AimTurretSubsys;
 import frc.robot.subsystems.DriveTrainSubsys;
 import frc.robot.subsystems.Vision;
 
@@ -19,18 +21,19 @@ public class SetXAlign extends CommandBase {
   /**
    * Creates a new SetXAlign.
    */
-  DriveTrainSubsys driveTrain;
   Vision vision;
   PIDController controller;
   RobotContainer robotContainer;
+  private RollingAverage avg;
+  AimTurretSubsys turret;
 
-  public SetXAlign(DriveTrainSubsys m_driveTrain, Vision m_vision, RobotContainer m_robocont) {
+  public SetXAlign(AimTurretSubsys m_turret, Vision m_vision, RobotContainer m_robocont) {
     // Use addRequirements() here to declare subsystem dependencies.
-    driveTrain = m_driveTrain;
     vision = m_vision;
+    turret = m_turret;
     robotContainer = m_robocont;
     controller = new PIDController(Constants.X_ALIGN_KP, Constants.X_ALIGN_KI, Constants.X_ALIGN_KD);
-    addRequirements(driveTrain);
+    avg = new RollingAverage(32);
     addRequirements(vision);
   }
 
@@ -40,18 +43,19 @@ public class SetXAlign extends CommandBase {
     controller.setSetpoint(0);
     controller.reset();
     controller.setTolerance(Constants.TOLERANCE_X_ALIGN);
+    avg.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xOffset = vision.getXOffsetAngle();
+    double xOffset = avg.sample(vision.getXOffsetAngle());
     double tolerance = Constants.TOLERANCE_X_ALIGN;
     double setZ;
-    if(Math.abs(xOffset) < tolerance){
+    if(Math.abs(xOffset) < tolerance) {
       setZ=0;
     } else {
-      double t = Constants.ALIGN_LERP_T;
+      double t = Constants.ALIGN_LERP_TAU;
       setZ = xOffset*(1-t);
       setZ /= 27;
       setZ*=0.5;
@@ -67,11 +71,8 @@ public class SetXAlign extends CommandBase {
     double z = controller.calculate(xOffset);
     z /= 54;
     z = Math.max(Math.abs(z), 0.1) * -Math.signum(z);
-    double x = robotContainer.getRawAxis(Constants.JOYSTICK_X_AXIS);
-    double y = robotContainer.getRawAxis(Constants.JOYSTICK_Y_AXIS);
-    y*=-1;
-    SmartDashboard.putNumber("Set Z Val", setZ);
-    driveTrain.setDrive(x, y, setZ);
+    SmartDashboard.putNumber("Set Turret Value", setZ);
+    turret.setMotor(setZ);
     //driveTrain.setDrive(0, 0, z);
   }
 
@@ -87,7 +88,8 @@ public class SetXAlign extends CommandBase {
     double tolerance = Constants.TOLERANCE_X_ALIGN;
     if(Math.abs(xOffset) < tolerance){
       return true;
-    }*/
+    }
+    */
     return false;
   }
 }

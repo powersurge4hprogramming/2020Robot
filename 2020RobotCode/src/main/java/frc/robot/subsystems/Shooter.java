@@ -7,13 +7,18 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.data_structs.Utilities;
 
 public class Shooter extends SubsystemBase {
   /**
@@ -28,14 +33,26 @@ public class Shooter extends SubsystemBase {
   double accelertion = -9.8;
   double velocity = 0;
   double yinit = 0;
+  double dY;
+  final NeutralMode kBrakeDurNeutral = NeutralMode.Coast;
+  final int kUnitsPerRevolution = 2048;
   
   public Shooter(Vision m_vis) {
     vision = m_vis;
-    x = 7;
+    x = 1;
     y = 2.4;
     yinit = 0.9144;
     theta = 45;
     velocity = 0;
+    dY = y-yinit;
+    TalonFXConfiguration configs = new TalonFXConfiguration();
+		/* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
+		configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+		/* config all the settings */
+    talonFX.configAllSettings(configs);
+    talonFX.setNeutralMode(NeutralMode.Coast);
+    talonFX.setInverted(true);
+    
   }
 
   @Override
@@ -47,13 +64,33 @@ public class Shooter extends SubsystemBase {
       yAngle = 0.01;
     }
     x = 1.575/(Math.tan(yAngle));
-    double numer = (-4.9)*(Math.pow(x, 2));
-    double denom = (Math.cos(theta)*((Math.cos(theta)*y)-(Math.cos(theta)*yinit)-(Math.sin(theta)*x)));
-    if(denom == 0){
-      denom = -0.01;
+    double angle = Utilities.getAngle(25, x, dY);
+    if(Double.isNaN(angle)){
+      velocity = 0;
     }
-    double velocity = Math.sqrt((numer/denom));
-    SmartDashboard.putNumber("Shooter Target Velocity", velocity);
+    SmartDashboard.putNumber("Angle", angle);
+    System.out.println(angle);
+    // Map angle to linear actuator space and assign
 
+
+  }
+  public void setPercentOutput(double speed){
+    talonFX.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setVelocityOutput(double velocity) {
+    talonFX.set(ControlMode.Velocity, velocity);
+  }
+
+  public double getVelocity(){
+    double appliedMotorOutput = talonFX.getMotorOutputPercent();
+		int selSenPos = talonFX.getSelectedSensorPosition(0); /* position units */
+    int selSenVel = talonFX.getSelectedSensorVelocity(0); /* position units per 100ms */
+    double pos_Rotations = (double) selSenPos / kUnitsPerRevolution;
+		double vel_RotPerSec = (double) selSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
+    double vel_RotPerMin = vel_RotPerSec * 60.0;
+    double vel_MetersPerSec = vel_RotPerSec*2*Math.PI*0.0762;
+    SmartDashboard.putNumber("RPM", vel_RotPerMin);
+    return vel_MetersPerSec;
   }
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.data_structs.RingBuffer;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.WheelOfFortune;
 
@@ -20,11 +21,20 @@ public class PositionControl extends CommandBase {
    */
   private ColorSensor colorSens;
   private WheelOfFortune wheelOfFort;
+
+  
+  private Color[] colorArray;
+  private RingBuffer colorBuffer;
+
   public PositionControl(ColorSensor m_colsens, WheelOfFortune m_wheeloff) {
     colorSens = m_colsens;
     wheelOfFort = m_wheeloff;
     // Use addRequirements() here to declare subsystem dependencies.
+
     
+    colorArray = new Color[] { colorSens.kRedTarget, colorSens.kGreenTarget, 
+      colorSens.kBlueTarget, colorSens.kYellowTarget };
+      colorBuffer = new RingBuffer(colorArray);
   }
 
   // Called when the command is initially scheduled.
@@ -37,17 +47,16 @@ public class PositionControl extends CommandBase {
   public void execute() {
     int kDirection;
     String gameData;
- gameData = DriverStation.getInstance().getGameSpecificMessage();
-if(gameData.length() > 0)
-{
-  kDirection = colorSens.getDirection(gameData.charAt(0));
-    wheelOfFort.setDrive(0.2*kDirection);
-    SmartDashboard.putNumber("kDirection", kDirection);
-  
-} else {
-  //Code for no data received yet
-}
-
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0)
+    {
+      kDirection = colorSens.getDirection(gameData.charAt(0));
+      wheelOfFort.setDrive(0.2*kDirection);
+      SmartDashboard.putNumber("kDirection", kDirection);
+    } 
+    else {
+      //Code for no data received yet
+    }
   }
 
   // Called once the command ends or is interrupted.

@@ -14,34 +14,40 @@ import java.util.LinkedList;
  */
 public class RollingAverage {
 
-    private LinkedList<Float> entryQueue;
-    private float sum;
+    private LinkedList<Double> entryQueue;
+    private double sum;
     private int maxSize;
 
     public RollingAverage(int size) {
         entryQueue = new LinkedList<>();
+        sum = 0;
         maxSize = Math.max(0, size);
     }
     
-    public float getAvg() {
+    public double getAvg() {
         return sum / entryQueue.size();
     }
 
-    public float sample(float sample) {
+    public double sample(double sample) {
         entryQueue.add(sample);
         resize();
         return getAvg();
     }
 
 
-    public float setSize(int size) {
+    public double setSize(int size) {
         this.maxSize = Math.max(0, size);
         resize();
         return getAvg();
     }
 
+    public void reset() {
+        entryQueue = new LinkedList<>();
+        sum = 0;
+    }
+
     private void resize() {
-        while(entryQueue.size() > maxSize) {
+        while(entryQueue.size() > maxSize && entryQueue.size() > 0) {
             sum -= entryQueue.remove();
         }
     }

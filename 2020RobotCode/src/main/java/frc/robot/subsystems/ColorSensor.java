@@ -31,12 +31,7 @@ public class ColorSensor extends SubsystemBase {
   public final Color kGreenTarget = ColorMatch.makeColor(0.167, 0.591, 0.240);
   public final Color kRedTarget = ColorMatch.makeColor(0.549, 0.333, 0.114);
   public final Color kYellowTarget = ColorMatch.makeColor(0.320, 0.572, 0.100);
-  private Color[] colorArray = {kRedTarget, kGreenTarget, kBlueTarget, kYellowTarget};
-  private RingBuffer ringBuffer = new RingBuffer(colorArray);
-  private int numOfChange;
-  private int numOfRotations;
-  private String previousColor;
-  private int colorCount;
+  //private Color[] colorArray = {kRedTarget, kGreenTarget, kBlueTarget, kYellowTarget};
   // Move the Color objects into constants, so we don't need 3 vars per color.
   //private final Color kBlueTarget = ColorMatch.makeColor(Constants.RED_VAL_FOR_BLUE, Constants.RED_VAL_FOR_BLUE, b)
   public ColorSensor() {
@@ -44,36 +39,21 @@ public class ColorSensor extends SubsystemBase {
     colorMatcher.addColorMatch(kGreenTarget);
     colorMatcher.addColorMatch(kRedTarget);
     colorMatcher.addColorMatch(kYellowTarget); 
-    numOfChange = -1;
-    numOfRotations = 0;
-    previousColor = "";
-    colorCount = 0;
     match = colorMatcher.matchClosestColor(colorSensor.getColor());
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public ColorMatchResult getColorMatch() {
     Color detectedColor = colorSensor.getColor();
     double IR = colorSensor.getIR();
     int proximity = colorSensor.getProximity();
-    match = colorMatcher.matchClosestColor(detectedColor);
-    String colorString = getColorString(match);
-  
-    if(ringBuffer.getColor().equals(match.color)){
-      colorCount++;
-    } else {
-      colorCount = 0;
-    }
-
-    if(colorCount >= Constants.NUM_OF_COLOR_THRESHOLD){
-      ringBuffer.getNext();
-      numOfChange++;
-      colorCount = 0;
-    }
-    numOfRotations = numOfChange / 8;
+    String colorString = getColorString(detectedColor);
     printAll(detectedColor, IR, proximity, colorString);
-    previousColor = getColorString(match);
+    return colorMatcher.matchClosestColor(detectedColor);
   }
 
   public String getColorString(ColorMatchResult match){
@@ -81,6 +61,7 @@ public class ColorSensor extends SubsystemBase {
     colorString = getColorString(match.color);
     return colorString;
   }
+
   public String getColorString(Color match){
     String colorString;
     if (match == kBlueTarget) {
@@ -97,26 +78,9 @@ public class ColorSensor extends SubsystemBase {
     return colorString;
   }
 
-  public void setNumRotateZero(){
-    numOfChange = 0;
-    numOfRotations = 0;
-  }
-
-  public int getNumOfRotation(){
-    return numOfRotations;
-  }
-
-  public void reset(){
-    numOfChange = -1;
-    numOfRotations = 0;
-    previousColor = "";
-    colorCount = 0;
+  public void reset() {
     Color detectedColor = colorSensor.getColor();
     match = colorMatcher.matchClosestColor(detectedColor);
-    while(!ringBuffer.getColor().equals(match.color)){
-      ringBuffer.getNext();
-    }
-    previousColor = getColorString(ringBuffer.getColor());
   }
 
   /**
@@ -154,9 +118,5 @@ public class ColorSensor extends SubsystemBase {
     SmartDashboard.putNumber("Proximity", proximity);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
-    SmartDashboard.putNumber("Number Of Changes", numOfChange);
-    SmartDashboard.putNumber("Number Of Rotations", numOfRotations);
-    SmartDashboard.putNumber("Color Count", colorCount);
-    SmartDashboard.putString("Expected Color", getColorString(ringBuffer.getColor()));
   }
 }

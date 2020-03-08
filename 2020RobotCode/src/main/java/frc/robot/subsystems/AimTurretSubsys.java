@@ -11,18 +11,21 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Feeder extends SubsystemBase {
-  
+public class AimTurretSubsys extends SubsystemBase {
   /**
-   * Creates a new Feeder.
+   * Creates a new AimTurretSubsys.
    */
-  public Feeder() {
+  WPI_VictorSPX turret = new WPI_VictorSPX(9);
+  public AimTurretSubsys() {
 
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
 
+  public void setMotor(double speed){
+    turret.set(speed);
   }
 }

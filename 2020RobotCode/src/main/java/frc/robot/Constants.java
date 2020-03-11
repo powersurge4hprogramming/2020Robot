@@ -29,6 +29,7 @@ public final class Constants {
      * 2 - Z axis (rotation)
      */
     // Drive Train Motor Controllers
+    
     public static final int BRUSH_MOTOR_CONTROLLER = 1;
     public static final int COLLECTOR_MOTOR_CONTROLLER = 2;
     public static final int FRONT_RIGHT_MOTOR_CONTROLLER = 3;
@@ -39,7 +40,7 @@ public final class Constants {
     
 
     public static final int SHOOTER_TALON_FX = 0;
-    
+    public static final int LINEAR_ACTUATOR_PWM_PORT = 0;
     public static final int DRIVER_JOYSTICK_USB_PORT = 0; 
     public static final int OPERATOR_JOYSTICK_USB_PORT = 1;
     public static final int JOYSTICK_X_AXIS = 0;
@@ -66,5 +67,8 @@ public final class Constants {
     public static final double ANGLE_VELOCITY_DIST = 10;
 	public static final double DEFAULT_ANGLE = 45;
 	public static final double DEFAULT_VELOCITY = 15;
+	public static final int OPERATOR_AIM_BUTTON = 5;
+	public static final int SHOOT_BUTTON = 6;
+	
 	
 }

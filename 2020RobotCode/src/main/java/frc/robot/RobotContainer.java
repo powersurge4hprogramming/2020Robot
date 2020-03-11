@@ -24,6 +24,7 @@ import frc.robot.commands.MechDrive;
 import frc.robot.commands.PositionControl;
 import frc.robot.commands.RotationControl;
 import frc.robot.commands.SetXAlign;
+import frc.robot.commands.TeleopShootCmd;
 import frc.robot.commands.Test;
 import frc.robot.subsystems.AimTurretSubsys;
 import frc.robot.subsystems.Collector;
@@ -70,7 +71,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_driveTrain.setDefaultCommand(m_mechDrive);
-    m_turret.setDefaultCommand(m_aimCommand);
+    //m_turret.setDefaultCommand(m_aimCommand);
     //vision.setCameraStream(1);
   }
 
@@ -87,6 +88,8 @@ public class RobotContainer {
     //new JoystickButton(m_driverInput, 3).whileHeld(new Test(m_shooter));
     //new JoystickButton(m_driverInput, Constants.JOYSTICK_FEEDER_BUTTON).whileHeld(new FeederTestCmd(m_feeder));
     new JoystickButton(m_operatorInput, Constants.OPERATOR_COLLECT_BUTTON).whileHeld(new Collect(m_collector));
+    JoystickButton test = new JoystickButton(m_operatorInput, Constants.SHOOT_BUTTON);
+    new JoystickButton(m_operatorInput, Constants.OPERATOR_AIM_BUTTON).whileHeld(new TeleopShootCmd(m_shooter, m_turret, vision, test));
   }
   public double getRawAxisDriver(int axis){
     return m_driverInput.getRawAxis(axis);

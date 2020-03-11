@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,6 +27,7 @@ public class Shooter extends SubsystemBase {
    */
   WPI_TalonFX talonFX = new WPI_TalonFX(Constants.SHOOTER_TALON_FX);
   WPI_VictorSPX stickyWheel = new WPI_VictorSPX(8);
+  Servo linearAct = new Servo(Constants.LINEAR_ACTUATOR_PWM_PORT);
   Vision vision;
   double x;
   double y;
@@ -45,6 +47,7 @@ public class Shooter extends SubsystemBase {
     theta = 45;
     velocity = 0;
     dY = y-yinit;
+    //linearAct.setBounds(1, 0.95, 0.5, 0.05, 0);
     TalonFXConfiguration configs = new TalonFXConfiguration();
 		/* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
 		configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
@@ -69,7 +72,7 @@ public class Shooter extends SubsystemBase {
       velocity = 0;
     }
     SmartDashboard.putNumber("Angle", angle);
-    System.out.println(angle);
+    //System.out.println(angle);
     // Map angle to linear actuator space and assign
 
 
@@ -92,5 +95,10 @@ public class Shooter extends SubsystemBase {
     double vel_MetersPerSec = vel_RotPerSec*2*Math.PI*0.0762;
     SmartDashboard.putNumber("RPM", vel_RotPerMin);
     return vel_MetersPerSec;
+  }
+
+  public void setAngle(double speed){
+    linearAct.setSpeed(0.5);
+    linearAct.set(speed);
   }
 }

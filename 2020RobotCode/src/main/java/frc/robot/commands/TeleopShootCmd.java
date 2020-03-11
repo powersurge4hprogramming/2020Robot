@@ -46,6 +46,7 @@ public class TeleopShootCmd extends CommandBase {
   public void initialize() {
     shooter.setPercentOutput(0);
     aimSubsys.setMotor(0);
+    shooter.setAngle(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -57,7 +58,7 @@ public class TeleopShootCmd extends CommandBase {
     double yAngle = avgY.sample(vision.getYOffsetAngle());
     double velocity;
     double angle;
-    if(Math.tan(yAngle) == 0){
+    if(Math.tan(yAngle) == 0) {
       yAngle = 0.01;
     }
     double dist = 1.575/(Math.tan(yAngle));
@@ -73,16 +74,19 @@ public class TeleopShootCmd extends CommandBase {
         angle = Constants.DEFAULT_ANGLE;
       }
     }
+    
     // TODO: Turn the xAlign
 
     // TODO: Map angle to linear actuator space and apply to the turret hood
     
     // If the shoot button is held down, apply velocity to the shooter wheel
-    // Map velocity to percent output and output.
+    // Map ball velocity to wheel velocity and output.
     if (shootButton.get()) {
+      //velocity = ;
       shooter.setVelocityOutput(velocity);
     }
     
+    shooter.setAngle(0.1);
     SmartDashboard.putNumber("Angle", angle);
   }
 
@@ -91,6 +95,7 @@ public class TeleopShootCmd extends CommandBase {
   public void end(boolean interrupted) {
     shooter.setPercentOutput(0);
     aimSubsys.setMotor(0);
+    shooter.setAngle(0);
   }
 
   // Returns true when the command should end.

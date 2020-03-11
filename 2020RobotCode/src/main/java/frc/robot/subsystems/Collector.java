@@ -18,10 +18,11 @@ public class Collector extends SubsystemBase {
    * Creates a new Collector.
    */
   WPI_VictorSPX brushesSPX = new WPI_VictorSPX(Constants.BRUSH_MOTOR_CONTROLLER);
+  
   WPI_VictorSPX collectorSPX = new WPI_VictorSPX(Constants.COLLECTOR_MOTOR_CONTROLLER);
 
   public Collector() {
-
+    brushesSPX.setInverted(true);
   }
 
   @Override

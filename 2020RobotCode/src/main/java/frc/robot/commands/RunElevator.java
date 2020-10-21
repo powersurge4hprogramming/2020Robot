@@ -8,16 +8,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Collector;
 
-public class Collect extends CommandBase {
+public class RunElevator extends CommandBase {
   /**
    * Creates a new Collect.
    */
+  private RobotContainer robotContainer;
   Collector collector;
-  public Collect(Collector m_collector) {
+  public RunElevator(Collector m_collector, RobotContainer robocont) {
     // Use addRequirements() here to declare subsystem dependencies.
     collector = m_collector;
+    this.robotContainer = robocont;
     addRequirements(collector);
   }
 
@@ -31,8 +35,10 @@ public class Collect extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    collector.setBrushesMotor(1);
-    collector.setWheelsMotor(1);
+    double input = robotContainer.getRawAxisOperator(Constants.OPERATOR_JOYSTICK_COLLECTOR_AXIS);
+    input = input*input*Math.signum(input)*0.7*-1;
+    collector.setBrushesMotor(input);
+    collector.setWheelsMotor(0);
   }
 
   // Called once the command ends or is interrupted.

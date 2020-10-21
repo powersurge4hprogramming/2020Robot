@@ -8,42 +8,35 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.AimTurretSubsys;
+import frc.robot.subsystems.StickyWheel;
 
-public class AimTurret extends CommandBase {
+public class RunStickyWheel extends CommandBase {
+  StickyWheel stickywheel;
   /**
-   * Creates a new AimTurret.
+   * Creates a new RunStickyWheel.
    */
-AimTurretSubsys turret;
-private RobotContainer robotContainer;
-
-  public AimTurret(AimTurretSubsys m_turret, RobotContainer robocont) {
+  public RunStickyWheel(StickyWheel m_sticky) {
+    stickywheel = m_sticky;
+    addRequirements(stickywheel);
     // Use addRequirements() here to declare subsystem dependencies.
-    turret = m_turret;
-    this.robotContainer = robocont;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    turret.setMotor(0);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //double turnPercent = robotContainer.getRawAxisOperator(Constants.OPERATOR_MANUAL_TURRET_AXIS);
-    //turnPercent = Math.pow(turnPercent, 2) * Math.signum(turnPercent);
-
-    //turret.setMotor(turnPercent);
+    stickywheel.setMotor(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    turret.setMotor(0);
+    stickywheel.setMotor(0);
   }
 
   // Returns true when the command should end.

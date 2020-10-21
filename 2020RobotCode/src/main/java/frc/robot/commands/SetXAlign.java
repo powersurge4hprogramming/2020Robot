@@ -42,7 +42,7 @@ public class SetXAlign extends CommandBase {
   public void initialize() {
     controller.setSetpoint(0);
     controller.reset();
-    controller.setTolerance(Constants.TOLERANCE_X_ALIGN);
+    //controller.setTolerance(Constants.LIMELIGHT_TOLERANCE_X_ALIGN);
     avg.reset();
   }
 
@@ -50,7 +50,7 @@ public class SetXAlign extends CommandBase {
   @Override
   public void execute() {
     double xOffset = avg.sample(vision.getXOffsetAngle());
-    double tolerance = Constants.TOLERANCE_X_ALIGN;
+    double tolerance = Constants.LIMELIGHT_TOLERANCE_X_ALIGN;
     double setZ;
     if(Math.abs(xOffset) < tolerance) {
       setZ=0;

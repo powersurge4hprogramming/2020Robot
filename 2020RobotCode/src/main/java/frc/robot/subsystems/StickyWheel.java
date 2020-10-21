@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class StickyWheel extends SubsystemBase {
-  WPI_VictorSPX wheel = new WPI_VictorSPX(Constants.STICKY_MOTOR_CONTROLLER);
+  WPI_VictorSPX wheel = new WPI_VictorSPX(Constants.GREENPUSHWHEEL_MOTOR_CONTROLLER);
   
   /**
    * Creates a new Feeder.

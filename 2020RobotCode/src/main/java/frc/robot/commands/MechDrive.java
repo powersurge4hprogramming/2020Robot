@@ -37,10 +37,10 @@ public class MechDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double x = robotContainer.getRawAxisDriver(Constants.JOYSTICK_X_AXIS);
-    double y = robotContainer.getRawAxisDriver(Constants.JOYSTICK_Y_AXIS);
-    double z = robotContainer.getRawAxisDriver(Constants.JOYSTICK_Z_AXIS);
-    double scale = robotContainer.getRawAxisDriver(Constants.JOYSTICK_SCALE_AXIS);
+    double x = robotContainer.getRawAxisDriver(Constants.DRIVER_JOYSTICK_X_AXIS);
+    double y = robotContainer.getRawAxisDriver(Constants.DRIVER_JOYSTICK_Y_AXIS);
+    double z = robotContainer.getRawAxisDriver(Constants.DRIVER_JOYSTICK_Z_AXIS);
+    double scale = robotContainer.getRawAxisDriver(Constants.DRIVER_JOYSTICK_SCALE_AXIS);
     //Formula for scale (1-x)/2
     scale = (1-scale)/2;
     //squares inputs

@@ -7,9 +7,15 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,7 +26,11 @@ public class Collector extends SubsystemBase {
   WPI_VictorSPX brushesSPX = new WPI_VictorSPX(Constants.NINJASTAR_MOTOR_CONTROLLER);
   
   WPI_VictorSPX collectorSPX = new WPI_VictorSPX(Constants.INTAKE_MOTOR_CONTROLLER);
-
+  private NetworkTableEntry speedSlider = Shuffleboard.getTab("Collector Speed").add("Speed", 1)
+  .withWidget(BuiltInWidgets.kNumberSlider)
+  .withProperties(Map.of("min", 0, "max", 1)) // specify widget properties here
+  .getEntry();
+          
   public Collector() {
     brushesSPX.setInverted(true);
   }
@@ -28,10 +38,11 @@ public class Collector extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
   }
 
   public void setBrushesMotor(double speed){
-    brushesSPX.set(ControlMode.PercentOutput, speed);
+    brushesSPX.set(ControlMode.PercentOutput, speedSlider.getDouble(0));
   }
 
   public void setWheelsMotor(double speed){

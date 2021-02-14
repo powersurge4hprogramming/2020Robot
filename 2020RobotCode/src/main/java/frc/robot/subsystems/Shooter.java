@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -15,7 +17,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,6 +30,10 @@ public class Shooter extends SubsystemBase {
   /**
    * Creates a new Shooter.
    */
+  private NetworkTableEntry speedSlider = Shuffleboard.getTab("Shooter Speed").add("Speed", 0)
+  .withWidget(BuiltInWidgets.kNumberSlider)
+  .withProperties(Map.of("min", 0, "max", 1)) // specify widget properties here
+  .getEntry();
   WPI_TalonFX talonFX = new WPI_TalonFX(Constants.SHOOTER_TALON_FX);
   WPI_VictorSPX stickyWheel = new WPI_VictorSPX(8);
   Servo linearAct = new Servo(Constants.LINEAR_ACTUATOR_PWM_PORT);
@@ -100,5 +109,9 @@ public class Shooter extends SubsystemBase {
   public void setAngle(double speed){
     linearAct.setSpeed(0.5);
     linearAct.set(speed);
+  }
+
+  public double getSliderSpeed(){
+    return speedSlider.getDouble(0);
   }
 }

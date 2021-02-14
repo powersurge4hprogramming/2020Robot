@@ -66,9 +66,9 @@ public final class Constants {
     public static final double ANGLE_VELOCITY_DIST = 10;
 	public static final double DEFAULT_ANGLE = 45;
 	public static final double DEFAULT_VELOCITY = 15;
-	public static final int OPERATOR_AIM_BUTTON = 5;
-	public static final int SHOOT_BUTTON = 6;
-	public static final int OPERATOR_STICKY_BUTTON = 2;
+	public static final int OPERATOR_AIM_BUTTON = 5; //Left Bumper
+	public static final int SHOOT_BUTTON = 6; //Right Bumper
+	public static final int OPERATOR_STICKY_BUTTON = 2; //B Button
 	
 	
 }

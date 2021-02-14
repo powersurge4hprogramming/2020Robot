@@ -88,7 +88,7 @@ public class RobotContainer {
     new JoystickButton(m_operatorInput, Constants.OPERATOR_SET_X_ALIGN_BUTTON).whileHeld(new SetXAlign(m_turret, vision, this));
     new JoystickButton(m_driverInput, Constants.DRIVER_BUTTON_INDEX_ROTATION_CONTROL).whenPressed(new RotationControl(m_colorSensor, wheelOfFortune));
     new JoystickButton(m_driverInput, Constants.DRIVER_BUTTON_INDEX_POSITION_CONTROL).whenPressed(new PositionControl(m_colorSensor, wheelOfFortune));
-    //new JoystickButton(m_driverInput, 3).whileHeld(new Test(m_shooter));
+    new JoystickButton(m_driverInput, 3).whileHeld(new Test(m_shooter));
     //new JoystickButton(m_driverInput, Constants.JOYSTICK_FEEDER_BUTTON).whileHeld(new FeederTestCmd(m_feeder));
     new JoystickButton(m_operatorInput, Constants.OPERATOR_COLLECT_BUTTON).whileHeld(new RunElevator(m_collector, this));
     JoystickButton test = new JoystickButton(m_operatorInput, Constants.SHOOT_BUTTON);

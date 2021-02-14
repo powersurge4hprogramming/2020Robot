@@ -7,6 +7,11 @@
 
 package frc.robot.commands;
 
+import java.util.Map;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
@@ -16,7 +21,7 @@ public class Test extends CommandBase {
    * Creates a new Test.
    */
   
-
+  private NetworkTableEntry speedSlider;
   Shooter shooter;
   public Test(Shooter m_shooter) {
     shooter = m_shooter;
@@ -28,13 +33,17 @@ public class Test extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setPercentOutput(1);
-    SmartDashboard.putNumber("Velocity (m/s)", shooter.getVelocity());
+    
+    double input = shooter.getSliderSpeed();
+    shooter.setPercentOutput(input);
+    System.out.println(input);
+    //SmartDashboard.putNumber("Actual Velocity (m/s)", shooter.getVelocity());
   }
 
   // Called once the command ends or is interrupted.

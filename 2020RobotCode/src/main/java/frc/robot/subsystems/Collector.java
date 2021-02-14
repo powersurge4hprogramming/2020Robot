@@ -26,7 +26,7 @@ public class Collector extends SubsystemBase {
   WPI_VictorSPX brushesSPX = new WPI_VictorSPX(Constants.NINJASTAR_MOTOR_CONTROLLER);
   
   WPI_VictorSPX collectorSPX = new WPI_VictorSPX(Constants.INTAKE_MOTOR_CONTROLLER);
-  private NetworkTableEntry speedSlider = Shuffleboard.getTab("Collector Speed").add("Speed", 1)
+  private NetworkTableEntry speedSlider = Shuffleboard.getTab("Collector Speed").add("Speed", 0)
   .withWidget(BuiltInWidgets.kNumberSlider)
   .withProperties(Map.of("min", 0, "max", 1)) // specify widget properties here
   .getEntry();

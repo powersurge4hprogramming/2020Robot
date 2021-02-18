@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

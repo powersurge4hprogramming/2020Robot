@@ -7,12 +7,6 @@
 
 package frc.robot.commands;
 
-import java.util.Map;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
@@ -21,7 +15,6 @@ public class Test extends CommandBase {
    * Creates a new Test.
    */
   
-  private NetworkTableEntry speedSlider;
   Shooter shooter;
   public Test(Shooter m_shooter) {
     shooter = m_shooter;

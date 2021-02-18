@@ -15,7 +15,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -42,10 +41,14 @@ public class Collector extends SubsystemBase {
   }
 
   public void setBrushesMotor(double speed){
-    brushesSPX.set(ControlMode.PercentOutput, speedSlider.getDouble(0));
+    brushesSPX.set(ControlMode.PercentOutput, speed);
   }
 
   public void setWheelsMotor(double speed){
     collectorSPX.set(ControlMode.PercentOutput, speed);
+  }
+
+  public double getSpeedSlider(double defaultValue) {
+    return speedSlider.getDouble(defaultValue);
   }
 }

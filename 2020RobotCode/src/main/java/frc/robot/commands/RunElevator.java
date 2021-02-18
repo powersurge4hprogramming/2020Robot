@@ -37,7 +37,8 @@ public class RunElevator extends CommandBase {
   public void execute() {
     double input = robotContainer.getRawAxisOperator(Constants.OPERATOR_JOYSTICK_COLLECTOR_AXIS);
     input = input*input*Math.signum(input)*0.7*-1;
-    collector.setBrushesMotor(input);
+    double slider = collector.getSpeedSlider(0);
+    collector.setBrushesMotor(slider);
     collector.setWheelsMotor(0);
   }
 

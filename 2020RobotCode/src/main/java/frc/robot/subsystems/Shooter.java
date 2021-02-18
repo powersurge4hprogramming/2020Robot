@@ -12,7 +12,6 @@ import java.util.Map;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -34,6 +33,7 @@ public class Shooter extends SubsystemBase {
   .withWidget(BuiltInWidgets.kNumberSlider)
   .withProperties(Map.of("min", 0, "max", 1)) // specify widget properties here
   .getEntry();
+  
   WPI_TalonFX talonFX = new WPI_TalonFX(Constants.SHOOTER_TALON_FX);
   WPI_VictorSPX stickyWheel = new WPI_VictorSPX(8);
   Servo linearAct = new Servo(Constants.LINEAR_ACTUATOR_PWM_PORT);
@@ -71,7 +71,7 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     double yAngle = vision.getYOffsetAngle();
-    double xAngle = vision.getXOffsetAngle();
+    //double xAngle = vision.getXOffsetAngle();
     if(Math.tan(yAngle) == 0){
       yAngle = 0.01;
     }
@@ -95,10 +95,10 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getVelocity(){
-    double appliedMotorOutput = talonFX.getMotorOutputPercent();
-		int selSenPos = talonFX.getSelectedSensorPosition(0); /* position units */
+    //double appliedMotorOutput = talonFX.getMotorOutputPercent();
+		//int selSenPos = talonFX.getSelectedSensorPosition(0); /* position units */
     int selSenVel = talonFX.getSelectedSensorVelocity(0); /* position units per 100ms */
-    double pos_Rotations = (double) selSenPos / kUnitsPerRevolution;
+    //double pos_Rotations = (double) selSenPos / kUnitsPerRevolution;
 		double vel_RotPerSec = (double) selSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
     double vel_RotPerMin = vel_RotPerSec * 60.0;
     double vel_MetersPerSec = vel_RotPerSec*2*Math.PI*0.0762;

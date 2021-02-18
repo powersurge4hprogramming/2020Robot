@@ -7,23 +7,19 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AimTurret;
-import frc.robot.commands.RunElevator;
-import frc.robot.commands.RunStickyWheel;
 import frc.robot.commands.MechDrive;
 import frc.robot.commands.PositionControl;
 import frc.robot.commands.RotationControl;
+import frc.robot.commands.RunElevator;
+import frc.robot.commands.RunStickyWheel;
 import frc.robot.commands.SetXAlign;
 import frc.robot.commands.TeleopShootCmd;
 import frc.robot.commands.Test;
@@ -43,11 +39,14 @@ import frc.robot.subsystems.WheelOfFortune;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  
-  private final DriveTrainSubsys m_driveTrain = new DriveTrainSubsys();
+
+  // Input objects
   private final Joystick m_driverInput = new Joystick(Constants.DRIVER_JOYSTICK_USB_PORT);
   private final Joystick m_operatorInput = new Joystick(Constants.OPERATOR_JOYSTICK_USB_PORT);
   private final NetworkTable m_limeTable = NetworkTableInstance.getDefault().getTable("limelight");
+  
+  // The subsystems
+  private final DriveTrainSubsys m_driveTrain = new DriveTrainSubsys();
   private final Vision vision = new Vision(m_limeTable);
   private final ColorSensor m_colorSensor = new ColorSensor();
   private final WheelOfFortune wheelOfFortune = new WheelOfFortune();
@@ -56,7 +55,7 @@ public class RobotContainer {
   private final Collector m_collector = new Collector();
   private final AimTurretSubsys m_turret = new AimTurretSubsys();
 
-  
+  // The commands
   private final MechDrive m_mechDrive = new MechDrive(m_driveTrain, this);
   private final AimTurret m_aimCommand = new AimTurret(m_turret, this);
   private final RunElevator m_runElevator = new RunElevator(m_collector, this);
@@ -85,13 +84,14 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_operatorInput, Constants.OPERATOR_SET_X_ALIGN_BUTTON).whileHeld(new SetXAlign(m_turret, vision, this));
     new JoystickButton(m_driverInput, Constants.DRIVER_BUTTON_INDEX_ROTATION_CONTROL).whenPressed(new RotationControl(m_colorSensor, wheelOfFortune));
     new JoystickButton(m_driverInput, Constants.DRIVER_BUTTON_INDEX_POSITION_CONTROL).whenPressed(new PositionControl(m_colorSensor, wheelOfFortune));
     new JoystickButton(m_driverInput, 3).whileHeld(new Test(m_shooter));
     //new JoystickButton(m_driverInput, Constants.JOYSTICK_FEEDER_BUTTON).whileHeld(new FeederTestCmd(m_feeder));
+    
+    new JoystickButton(m_operatorInput, Constants.OPERATOR_SET_X_ALIGN_BUTTON).whileHeld(new SetXAlign(m_turret, vision, this));
     new JoystickButton(m_operatorInput, Constants.OPERATOR_COLLECT_BUTTON).whileHeld(new RunElevator(m_collector, this));
-    JoystickButton test = new JoystickButton(m_operatorInput, Constants.SHOOT_BUTTON);
+    JoystickButton test = new JoystickButton(m_operatorInput, Constants.OPERATOR_SHOOT_BUTTON);
     new JoystickButton(m_operatorInput, Constants.OPERATOR_AIM_BUTTON).whileHeld(new TeleopShootCmd(m_shooter, m_turret, vision, test));
     new JoystickButton(m_operatorInput, Constants.OPERATOR_STICKY_BUTTON).whileHeld(new RunStickyWheel(m_stickyWheel));
   }

@@ -14,7 +14,6 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.data_structs.RollingAverage;
 import frc.robot.subsystems.AimTurretSubsys;
-import frc.robot.subsystems.DriveTrainSubsys;
 import frc.robot.subsystems.Vision;
 
 public class SetXAlign extends CommandBase {

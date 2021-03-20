@@ -30,7 +30,7 @@ public class ShootCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.setAngle(0.1);
+    shooter.setActuator(0.1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

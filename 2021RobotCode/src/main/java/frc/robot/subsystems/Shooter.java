@@ -17,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -38,6 +39,10 @@ public class Shooter extends SubsystemBase {
   WPI_VictorSPX stickyWheel = new WPI_VictorSPX(Constants.GREENPUSHWHEEL_MOTOR_CONTROLLER);
   WPI_VictorSPX turretMotor = new WPI_VictorSPX(Constants.TURRET_MOTOR_CONTROLLER);
   Servo linearAct = new Servo(Constants.LINEAR_ACTUATOR_PWM_PORT);
+  DigitalInput clockwiseLimit = new DigitalInput(Constants.CLOCKWISE_ENCODER_DIO_PORT);
+  DigitalInput counterclockwiseLimit = new DigitalInput(Constants.COUNTERCLOCKWISE_ENCODER_DIO_PORT);
+
+
   Vision vision;
   double x;
   double y;
@@ -46,6 +51,7 @@ public class Shooter extends SubsystemBase {
   double velocity = 0;
   double yinit = 0;
   double dY;
+  private boolean turretBool = true;
   final NeutralMode kBrakeDurNeutral = NeutralMode.Coast;
   final int kUnitsPerRevolution = 2048;
   
@@ -81,7 +87,11 @@ public class Shooter extends SubsystemBase {
     if(Double.isNaN(angle)){
       velocity = 0;
     }
+    turretBool = !clockwiseLimit.get();
     SmartDashboard.putNumber("Angle", angle);
+    SmartDashboard.putNumber("Linear Actuator", Utilities.invLerp(0.2, 0.8, linearAct.get()));
+    SmartDashboard.putNumber("Linear Actuator Real", linearAct.get());
+    
     //System.out.println(angle);
     // Map angle to linear actuator space and assign
 
@@ -107,11 +117,16 @@ public class Shooter extends SubsystemBase {
     return vel_MetersPerSec;
   }
 
-  public void setAngle(double speed){
-    linearAct.set(speed);
+  public void setActuator(double speed){
+    linearAct.set(Utilities.lerp(0.2, 0.8, speed));
   }
 
   public void moveTurret(double speed) {
+    /*if (turretBool){
+      turretMotor.set(speed);
+    } else {
+      turretMotor.set(0);
+    }*/
     turretMotor.set(speed);
   }
 

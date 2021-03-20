@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -44,12 +45,13 @@ public class TurretControl extends CommandBase {
     if(input < 0.015 && input > -0.015){
       input = 0;
     }
-    input *= 0.001;
+    input *= 0.003;
     currentpos = currentpos + input;
-    currentpos = Math.max(currentpos, 0.2);
-    currentpos = Math.min(currentpos, 0.8);
+    currentpos = Math.max(currentpos, 0.0);
+    currentpos = Math.min(currentpos, 1.0);
+    SmartDashboard.putNumber("Current Pos", currentpos);
 
-    shooter.setAngle(currentpos);
+    shooter.setActuator(currentpos);
   }
 
   // Called once the command ends or is interrupted.

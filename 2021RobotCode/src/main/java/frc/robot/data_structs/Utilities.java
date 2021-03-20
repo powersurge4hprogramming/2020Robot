@@ -25,6 +25,18 @@ public class Utilities {
         return Double.NaN;
     }
 
+    public static final double lerp(double a, double b, double tau) {
+        tau = Math.max(tau, 0.0);
+        tau = Math.min(tau, 1.0);
+        return (b*tau)+(a*(1-tau));
+    }
+    public static final double invLerp(double a, double b, double val) {
+      /*  val = Math.max(val, 0.2);
+        val = Math.min(val, 0.8); */
+        return (val - a) / (b - a);
+    }
+
+
     public static final double getMinAngle(double dist) {
         double result = 0;
         double h = Constants.HEIGHT_TO_GOAL;

@@ -37,6 +37,11 @@ public final class Constants {
     public static final int LINEAR_ACTUATOR_PWM_PORT = 9;
     public static final int DRIVER_JOYSTICK_USB_PORT = 0; 
     public static final int OPERATOR_JOYSTICK_USB_PORT = 1;
+
+    // DIO
+    public static final int CLOCKWISE_ENCODER_DIO_PORT = 0;
+    public static final int COUNTERCLOCKWISE_ENCODER_DIO_PORT = 1;
+
     
 
     // Joystick Buttons

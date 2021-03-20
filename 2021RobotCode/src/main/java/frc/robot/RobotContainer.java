@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AimTurret;
+import frc.robot.commands.AutoDrive;
 import frc.robot.commands.MechDrive;
 import frc.robot.commands.TurretControl;
 import frc.robot.commands.PositionControl;
@@ -57,10 +58,10 @@ public class RobotContainer {
   private final AimTurretSubsys m_turret = new AimTurretSubsys();
 
   // The commands
+  private final AutoDrive m_autoDrive = new AutoDrive(m_driveTrain);
   private final MechDrive m_mechDrive = new MechDrive(m_driveTrain, this);
   private final AimTurret m_aimCommand = new AimTurret(m_turret, this);
   private final RunElevator m_runElevator = new RunElevator(m_collector, this);
- // private final MoveHood m_moveHood = new MoveHood(m_shooter, this);
   private final TurretControl m_moveTurret = new TurretControl(m_shooter, this);
 
 
@@ -74,13 +75,14 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_driveTrain.setDefaultCommand(m_mechDrive);
     m_collector.setDefaultCommand(m_runElevator);
     m_shooter.setDefaultCommand(m_moveTurret);
     //m_turret.setDefaultCommand(m_aimCommand);
     //vision.setCameraStream(1);
   }
-
+  public void teleopStart(){
+    m_driveTrain.setDefaultCommand(m_mechDrive);
+  }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -117,7 +119,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return m_autoDrive;
     //Should be an auto command
   }
 }

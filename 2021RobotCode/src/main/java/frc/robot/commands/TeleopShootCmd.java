@@ -49,7 +49,7 @@ public class TeleopShootCmd extends CommandBase {
   public void initialize() {
     shooter.setPercentOutput(0);
     aimSubsys.setMotor(0);
-    shooter.setAngle(0);
+    shooter.setActuator(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

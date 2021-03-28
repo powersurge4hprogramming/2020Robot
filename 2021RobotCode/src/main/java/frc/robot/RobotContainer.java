@@ -61,8 +61,9 @@ public class RobotContainer {
   private final AutoDrive m_autoDrive = new AutoDrive(m_driveTrain);
   private final MechDrive m_mechDrive = new MechDrive(m_driveTrain, this);
   private final AimTurret m_aimCommand = new AimTurret(m_turret, this);
-  private final RunElevator m_runElevator = new RunElevator(m_collector, this);
+  private final RunElevator m_runElevator = new RunElevator(m_collector);
   private final TurretControl m_moveTurret = new TurretControl(m_shooter, this);
+  private final ShootCmd m_shootcmd = new ShootCmd(m_shooter, this);
 
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_driveTrain);
@@ -75,8 +76,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_collector.setDefaultCommand(m_runElevator);
-    m_shooter.setDefaultCommand(m_moveTurret);
+    //m_collector.setDefaultCommand(m_runElevator);
+    m_shooter.setDefaultCommand(m_shootcmd);
     //m_turret.setDefaultCommand(m_aimCommand);
     //vision.setCameraStream(1);
   }
@@ -96,9 +97,8 @@ public class RobotContainer {
     //new JoystickButton(m_driverInput, Constants.JOYSTICK_FEEDER_BUTTON).whileHeld(new FeederTestCmd(m_feeder));
     
     new JoystickButton(m_operatorInput, Constants.OPERATOR_SET_X_ALIGN_BUTTON).whileHeld(new SetXAlign(m_turret, vision, this));
-    new JoystickButton(m_operatorInput, Constants.OPERATOR_COLLECT_BUTTON).whileHeld(new RunElevator(m_collector, this));
-    JoystickButton test = new JoystickButton(m_operatorInput, Constants.OPERATOR_SHOOT_BUTTON);
-    new JoystickButton(m_operatorInput, Constants.OPERATOR_AIM_BUTTON).whileHeld(new TeleopShootCmd(m_shooter, m_turret, vision, test));
+    new JoystickButton(m_operatorInput, Constants.OPERATOR_COLLECT_BUTTON).whileHeld(new RunElevator(m_collector));
+    //new JoystickButton(m_operatorInput, Constants.OPERATOR_AIM_BUTTON).whileHeld(new TeleopShootCmd(m_shooter, m_turret, vision));
     new JoystickButton(m_operatorInput, Constants.OPERATOR_STICKY_BUTTON).whileHeld(new RunStickyWheel(m_stickyWheel));
   }
   public double getRawAxisDriver(int axis){
@@ -119,6 +119,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    m_driveTrain.resetEncoders();
     return m_autoDrive;
     //Should be an auto command
   }

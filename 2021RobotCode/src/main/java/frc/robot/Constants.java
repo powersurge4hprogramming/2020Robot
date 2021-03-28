@@ -50,7 +50,7 @@ public final class Constants {
     
     // Gamepad Buttons
 	public static final int OPERATOR_SET_X_ALIGN_BUTTON = 5; // Left Bumper
-    public static final int OPERATOR_COLLECT_BUTTON = 1; // A Button(?)
+    public static final int OPERATOR_COLLECT_BUTTON = 3; // x Button(?)
 	public static final int OPERATOR_AIM_BUTTON = 5; //Left Bumper
 	public static final int OPERATOR_SHOOT_BUTTON = 6; //Right Bumper
     public static final int OPERATOR_STICKY_BUTTON = 2; //B Button

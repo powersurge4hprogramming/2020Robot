@@ -18,10 +18,9 @@ public class RunElevator extends CommandBase {
    */
   private RobotContainer robotContainer;
   Collector collector;
-  public RunElevator(Collector m_collector, RobotContainer robocont) {
+  public RunElevator(Collector m_collector) {
     // Use addRequirements() here to declare subsystem dependencies.
     collector = m_collector;
-    this.robotContainer = robocont;
     addRequirements(collector);
   }
 
@@ -29,24 +28,28 @@ public class RunElevator extends CommandBase {
   @Override
   public void initialize() {
     collector.setBrushesMotor(0);
-    collector.setWheelsMotor(0);
+    //collector.setWheelsMotor(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double input = robotContainer.getRawAxisOperator(Constants.OPERATOR_JOYSTICK_COLLECTOR_AXIS);
+    /*double input = robotContainer.getRawAxisOperator(Constants.OPERATOR_JOYSTICK_COLLECTOR_AXIS);
     input = input*input*Math.signum(input)*0.7*-1;
     double slider = collector.getSpeedSlider(0);
     collector.setBrushesMotor(slider);
     collector.setWheelsMotor(0);
+    */
+    System.out.println("Hello");
+    collector.setBrushesMotor(1);
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     collector.setBrushesMotor(0);
-    collector.setWheelsMotor(0);
+    //collector.setWheelsMotor(0);
   }
 
   // Returns true when the command should end.

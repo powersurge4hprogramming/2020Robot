@@ -36,10 +36,10 @@ public class AutoDrive extends CommandBase {
     m_driveTrain.resetEncoders();
     pidY.reset();
     stepNum1 = 6;
-    stepNum3 = 3;
+    stepNum3 = 14;
     stepNum2 = 2;
     pidY.setTolerance(8);
-    timeBetween = 3;
+    timeBetween = 0.25;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -49,10 +49,10 @@ public class AutoDrive extends CommandBase {
     m_driveTrain.resetEncoders();
     pidY.reset();
     stepNum1 = 6;
-    stepNum2 = 3;
+    stepNum2 = 14;
     stepNum3 = 6;
     pidY.setTolerance(8);
-    timeBetween = 3;
+    timeBetween = 0.25;
 
   }
 
@@ -179,19 +179,96 @@ public class AutoDrive extends CommandBase {
   private void doNav2() {
     SmartDashboard.putNumber("Step Num", stepNum2);
     switch (stepNum2) {
-      case 3:
+      case 14: // 60 foward
         trackDistance(0.0, 0.0, 0.0, 0, 60, 0);
         break;
-      case 2:
+      case 13: // 90 left turn
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, -0.5, 0, 0, 28);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+      case 12: // 70 forward
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, 0.0, 0, 70, 0);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 11: // 90 right turn
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, 0.35, 0, 0, 27);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 10: //  180 foward
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, 0.0, 0, 180, 0);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 9: // 90 right
         if (time.get() > timeBetween) {
           trackDistance(0.0, 0.0, 0.5, 0, 0, 22);
         } else  {
           m_driveTrain.resetEncoders();
         }
         break;
-      case 1:
+        case 8:// 60 foward
         if (time.get() > timeBetween) {
           trackDistance(0.0, 0.0, 0.0, 0, 60, 0);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 7: //90 left
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, -0.5, 0, 0, 22);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 6: // 30 fqwaord
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, 0.0, 0, 30, 0);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 5: // 90 left
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, -0.5, 0, 0, 22);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 4: // 180 fqwaord
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, 0.0, 0, 180, 0);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 3: // 90 left
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, -0.5, 0, 0, 22);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 2: // 30 fqwaord
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, 0.0, 0, 30, 0);
+        } else  {
+          m_driveTrain.resetEncoders();
+        }
+        break;
+        case 1: // 90 right
+        if (time.get() > timeBetween) {
+          trackDistance(0.0, 0.0, 0.5, 0, 0, 22);
         } else  {
           m_driveTrain.resetEncoders();
         }

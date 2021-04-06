@@ -44,7 +44,7 @@ public class ShootCmd extends CommandBase {
     
     double input = shooter.getSliderSpeed();
     shooter.setPercentOutput(input);
-    System.out.println(input);
+   // System.out.println(input);
     double inputTurret = robotContainer.getRawAxisOperator(Constants.OPERATOR_MANUAL_TURRET_AXIS)*-1;
     turretMove(inputTurret);
     double inputHood = robotContainer.getRawAxisOperator(Constants.OPERATOR_HOOD_AXIS)*-1;
@@ -63,7 +63,6 @@ public class ShootCmd extends CommandBase {
     currentpos = currentpos + input;
     currentpos = Math.max(currentpos, 0.0);
     currentpos = Math.min(currentpos, 1.0);
-    SmartDashboard.putNumber("Current Pos", currentpos);
 
     shooter.setActuator(currentpos);
   }

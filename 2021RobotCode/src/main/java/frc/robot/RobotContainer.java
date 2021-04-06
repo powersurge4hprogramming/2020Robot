@@ -12,6 +12,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AimTurret;
@@ -55,15 +57,25 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter(vision);
   private final StickyWheel m_stickyWheel = new StickyWheel();
   private final Collector m_collector = new Collector();
-  private final AimTurretSubsys m_turret = new AimTurretSubsys();
+  private final AimTurretSubsys m_turret = new AimTurretSubsys(); 
 
   // The commands
-  private final AutoDrive m_autoDrive = new AutoDrive(m_driveTrain);
   private final MechDrive m_mechDrive = new MechDrive(m_driveTrain, this);
   private final AimTurret m_aimCommand = new AimTurret(m_turret, this);
   private final RunElevator m_runElevator = new RunElevator(m_collector);
   private final TurretControl m_moveTurret = new TurretControl(m_shooter, this);
   private final ShootCmd m_shootcmd = new ShootCmd(m_shooter, this);
+
+  // The autpnomous commands
+  private final AutoDrive m_autoNav1 = new AutoDrive(m_driveTrain, 1);
+  private final AutoDrive m_autoNav2 = new AutoDrive(m_driveTrain, 2);
+  private final AutoDrive m_autoNav3 = new AutoDrive(m_driveTrain, 3);
+
+  private final SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
+
+
 
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_driveTrain);
@@ -119,8 +131,15 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    
+    SmartDashboard.putData(m_chooser);
+    m_chooser.setDefaultOption("Auto Nav 2", m_autoNav2);
+    m_chooser.addOption("Auto Nav 1", m_autoNav1);
+    m_chooser.addOption("Auto Nav 3", m_autoNav3);
+
+
     m_driveTrain.resetEncoders();
-    return m_autoDrive;
+    return m_chooser.getSelected();
     //Should be an auto command
   }
 }

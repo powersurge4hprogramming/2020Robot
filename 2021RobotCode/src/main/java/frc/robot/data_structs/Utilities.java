@@ -35,13 +35,16 @@ public class Utilities {
         val = Math.min(val, 0.8); */
         return (val - a) / (b - a);
     }
+    public static final double remap(double oldA, double oldB, double newA, double newB, double value) {
+        double result = invLerp(oldA, oldB, value);
+        return lerp(newA, newB, result);
+    }
 
 
     public static final double getMinAngle(double dist) {
         double result = 0;
         double h = Constants.HEIGHT_TO_GOAL;
         result = Math.toDegrees(Math.atan(h / dist));
-        SmartDashboard.putNumber("min angle", result);
         return result;
     }
 

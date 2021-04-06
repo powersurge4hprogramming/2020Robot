@@ -48,27 +48,28 @@ public class DriveTrainSubsys extends SubsystemBase {
 
       mecanumDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-
   }
 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putData(mecanumDrive);
+   /* SmartDashboard.putData(mecanumDrive);
     SmartDashboard.putData(leftEncoder);
     SmartDashboard.putData(rightEncoder);
-    SmartDashboard.putNumber("ENCODER ", leftEncoder.getDistance());
+    SmartDashboard.putNumber("ENCODER ", leftEncoder.getDistance()); */
 
-    
+    SmartDashboard.putData(leftEncoder);
+    SmartDashboard.putData(rightEncoder);
     
   }
   
   public void setDrive( double x, double y, double z){
-    SmartDashboard.putNumber("Y FOR AUTO", y*-1);
+    SmartDashboard.putNumber("Y FOR AUTO", y);
     mecanumDrive.driveCartesian(x, y, z);
     
   }
+
   public void resetEncoders() {
     leftEncoder.reset();
     rightEncoder.reset();

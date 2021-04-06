@@ -40,8 +40,7 @@ public class RunElevator extends CommandBase {
     collector.setBrushesMotor(slider);
     collector.setWheelsMotor(0);
     */
-    System.out.println("Hello");
-    collector.setBrushesMotor(1);
+    collector.setBrushesMotor(0.8);
     
   }
 

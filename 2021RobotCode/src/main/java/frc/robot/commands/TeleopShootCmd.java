@@ -89,7 +89,6 @@ public class TeleopShootCmd extends CommandBase {
       shooter.setVelocityOutput(velocity);
     }
     
-    SmartDashboard.putNumber("Angle", angle);
   }
 
   // Called once the command ends or is interrupted.

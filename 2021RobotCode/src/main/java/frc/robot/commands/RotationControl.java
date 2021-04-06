@@ -107,9 +107,9 @@ public class RotationControl extends CommandBase {
   }
 
   public void printAll() {
-    SmartDashboard.putNumber("Number Of Changes", numOfChange);
+   /* SmartDashboard.putNumber("Number Of Changes", numOfChange);
     SmartDashboard.putNumber("Number Of Rotations", numOfRotations);
     SmartDashboard.putNumber("Color Count", colorCount);
-    SmartDashboard.putString("Expected Color", colorSensor.getColorString(ringBuffer.getColor()));
+    SmartDashboard.putString("Expected Color", colorSensor.getColorString(ringBuffer.getColor())); */
   }
 }

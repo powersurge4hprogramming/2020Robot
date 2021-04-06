@@ -42,7 +42,6 @@ public class Collector extends SubsystemBase {
   }
 
   public void setBrushesMotor(double speed){
-    System.out.println("This is working!");
     brushesSPX.set(speed);
   }
 

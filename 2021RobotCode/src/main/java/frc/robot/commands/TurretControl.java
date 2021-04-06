@@ -49,7 +49,6 @@ public class TurretControl extends CommandBase {
     currentpos = currentpos + input;
     currentpos = Math.max(currentpos, 0.0);
     currentpos = Math.min(currentpos, 1.0);
-    SmartDashboard.putNumber("Current Pos", currentpos);
 
     shooter.setActuator(currentpos);
   }

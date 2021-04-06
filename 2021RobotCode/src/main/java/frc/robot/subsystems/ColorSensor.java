@@ -109,12 +109,12 @@ public class ColorSensor extends SubsystemBase {
 
 
   public void printAll(Color detectedColor, double IR, int proximity, String colorString){
-    SmartDashboard.putNumber("Red", detectedColor.red);
+   /* SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("IR", IR);
     SmartDashboard.putNumber("Proximity", proximity);
     SmartDashboard.putNumber("Confidence", match.confidence);
-    SmartDashboard.putString("Detected Color", colorString);
+    SmartDashboard.putString("Detected Color", colorString); */
   }
 }

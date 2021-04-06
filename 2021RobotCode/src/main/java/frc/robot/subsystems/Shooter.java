@@ -88,9 +88,6 @@ public class Shooter extends SubsystemBase {
       velocity = 0;
     }
     turretBool = !clockwiseLimit.get();
-    SmartDashboard.putNumber("Angle", angle);
-    SmartDashboard.putNumber("Linear Actuator", Utilities.invLerp(0.2, 0.8, linearAct.get()));
-    SmartDashboard.putNumber("Linear Actuator Real", linearAct.get());
     
     //System.out.println(angle);
     // Map angle to linear actuator space and assign

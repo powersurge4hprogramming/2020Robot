@@ -41,9 +41,9 @@ public class Vision extends SubsystemBase {
     //This method will be called once per scheduler run
     //Read of limelight values periodically and posts to dashboard
     
-    SmartDashboard.putNumber("LimelightX", getXOffsetAngle());
+    /*SmartDashboard.putNumber("LimelightX", getXOffsetAngle());
     SmartDashboard.putNumber("LimelightY", getYOffsetAngle());
-    SmartDashboard.putNumber("LimelightArea", getPercentArea());
+    SmartDashboard.putNumber("LimelightArea", getPercentArea()); */
   }
 
   public double getXOffsetAngle(){

@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.data_structs.RingBuffer;
@@ -52,7 +51,6 @@ public class PositionControl extends CommandBase {
     {
       kDirection = colorSens.getDirection(gameData.charAt(0));
       wheelOfFort.setDrive(0.2*kDirection);
-      SmartDashboard.putNumber("kDirection", kDirection);
     } 
     else {
       //Code for no data received yet

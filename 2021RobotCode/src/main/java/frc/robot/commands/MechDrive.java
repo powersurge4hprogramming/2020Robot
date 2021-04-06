@@ -47,13 +47,10 @@ public class MechDrive extends CommandBase {
     x = squareInput(x)*scale;
     y = squareInput(y)*scale;
     //Sqaures z, the scale, then applies to z
-    z = squareInput(z) * squareInput(scale);
+    z = squareInput(z) * scale;
     
     driveTrain.setDrive(x, y, z);
-    SmartDashboard.putNumber("Drive X Value", x);
-    SmartDashboard.putNumber("Drive Y Value", y);
-    SmartDashboard.putNumber("Drive Z Value", z);
-    SmartDashboard.putNumber("Drive Scale Value", scale);
+
     
 
   }

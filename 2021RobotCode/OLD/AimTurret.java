@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
+ 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.AimTurretSubsys;
@@ -15,8 +15,8 @@ public class AimTurret extends CommandBase {
   /**
    * Creates a new AimTurret.
    */
-AimTurretSubsys turret;
-private RobotContainer robotContainer;
+  AimTurretSubsys turret;
+  private RobotContainer robotContainer;
 
   public AimTurret(AimTurretSubsys m_turret, RobotContainer robocont) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,10 +33,11 @@ private RobotContainer robotContainer;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //double turnPercent = robotContainer.getRawAxisOperator(Constants.OPERATOR_MANUAL_TURRET_AXIS);
-    //turnPercent = Math.pow(turnPercent, 2) * Math.signum(turnPercent);
+    // double turnPercent =
+    // robotContainer.getRawAxisOperator(Constants.OPERATOR_MANUAL_TURRET_AXIS);
+    // turnPercent = Math.pow(turnPercent, 2) * Math.signum(turnPercent);
 
-    //turret.setMotor(turnPercent);
+    // turret.setMotor(turnPercent);
   }
 
   // Called once the command ends or is interrupted.
@@ -51,3 +52,4 @@ private RobotContainer robotContainer;
     return false;
   }
 }
+
